@@ -1,6 +1,9 @@
 import os
 from flask import Flask, render_template
 from subprocess import call
+from model import User
+from peewee import create_model_tables
+
 
 app = Flask(__name__)
 
@@ -14,8 +17,10 @@ def welcome():
         a = os.environ.get('DATABASE_URL')
     if os.environ.get('HEROKU'):
         b = os.environ.get('HEROKU')
+    User.insert(name='John', email='Doe').execute()
     return render_template('index.html', a=a, b=b)
 
 
 if __name__ == '__main__':
+    create_model_tables([User], fail_silently=True)
     app.run(port=5000, debug=True)
