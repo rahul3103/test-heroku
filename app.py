@@ -1,8 +1,7 @@
 import os
 from flask import Flask, render_template
 from subprocess import call
-from model import User
-from peewee import create_model_tables
+from model import db_proxy, User
 
 
 app = Flask(__name__)
@@ -22,5 +21,6 @@ def welcome():
 
 
 if __name__ == '__main__':
-    create_model_tables([User])
+    db_proxy.connect()
+    db_proxy.create_tables([User], safe=True)
     app.run(port=5000, debug=True)
