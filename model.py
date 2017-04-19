@@ -10,7 +10,7 @@ if os.environ.get('DATABASE_URL'):
     path = db.path[1:]
     host = db.hostname
     port = db.port
-    database = PostgresqlDatabase(database=path, user=user, password=password, host=host, port=port)
+    database = PostgresqlDatabase(path, user=user, password=password, host=host, port=port)
 else:
     database = PostgresqlDatabase('heroku')
 
