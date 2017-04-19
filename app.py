@@ -22,5 +22,5 @@ def welcome():
 
 
 if __name__ == '__main__':
-    create_model_tables([User], fail_silently=True)
+    create_model_tables([User])
     app.run(port=5000, debug=True)
