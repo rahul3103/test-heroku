@@ -2,3 +2,4 @@ uwsgi
 psycopg2
 flask
 peewee
+flask_peewee
