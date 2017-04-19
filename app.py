@@ -1,10 +1,38 @@
 import os
 from flask import Flask, render_template
 from subprocess import call
-from model import db_proxy, User
+from peewee import CharField, PostgresqlDatabase, create_model_tables
+from urllib.parse import urlparse
+from flask_peewee.db import Database
+
+
+if os.environ.get('DATABASE_URL'):
+    DATABASE_URL = os.environ.get('DATABASE_URL')
+    url = urlparse(DATABASE_URL)
+    DATABASE = {
+        'engine': 'peewee.PostgresqlDatabase',
+        'name': url.path[1:],
+        'user': url.username,
+        'password': url.password,
+        'host': url.hostname,
+        'port': url.port
+    }
+else:
+    DATABASE = {
+        'engine': 'peewee.PostgresqlDatabase',
+        'name': 'heroku'
+    }
 
 
 app = Flask(__name__)
+app.config.from_object(__name__)
+
+db = Database(app)
+
+
+class User(db.Model):
+    name = CharField()
+    email = CharField()
 
 
 @app.route('/')
@@ -21,6 +49,5 @@ def welcome():
 
 
 if __name__ == '__main__':
-    db_proxy.connect()
-    db_proxy.create_tables([User], safe=True)
+    create_model_tables([User], fail_silently=True)
     app.run(port=5000, debug=True)
