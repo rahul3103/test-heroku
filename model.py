@@ -1,6 +1,6 @@
 import os
 from peewee import Model, CharField, PostgresqlDatabase
-from urlparse import urlparse
+from urllib.parse import urlparse
 
 if os.environ.get('DATABASE_URL'):
     DATABASE_URL = os.environ.get('DATABASE_URL')
