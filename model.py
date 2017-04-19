@@ -6,7 +6,6 @@ db_proxy = Proxy()
 
 if os.environ.get('DATABASE_URL'):
     DATABASE_URL = os.environ.get('DATABASE_URL')
-    urlparse.uses_netloc.append('postgres')
     db = urlparse(DATABASE_URL)
     user = db.username
     password = db.password
