@@ -1,11 +1,13 @@
 import os
 from flask import Flask, render_template
+from subprocess import call
 
 app = Flask(__name__)
 
 
 @app.route('/')
 def welcome():
+    call('printenv')
     a = 'Default'
     b = 'Default'
     if os.environ.get('DATABASE_URL'):
