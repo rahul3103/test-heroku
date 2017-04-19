@@ -1,0 +1,3 @@
+uwsgi
+psycopg2
+flask
