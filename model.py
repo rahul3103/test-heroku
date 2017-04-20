@@ -1,19 +1,9 @@
 import os
 from peewee import Model, CharField, PostgresqlDatabase
 from urllib.parse import urlparse
+from playhouse.db_url import connect
 
-
-if os.environ.get('DATABASE_URL'):
-    DATABASE_URL = os.environ.get('DATABASE_URL')
-    url = urlparse(DATABASE_URL)
-    name = url.path[1:]
-    user = url.username,
-    password = url.password,
-    host = url.hostname,
-    port = url.port
-    database = PostgresqlDatabase(name, user=user, password=password, host=host, port=port)
-else:
-    database = PostgresqlDatabase('heroku')
+database = connect(os.environ.get('DATABASE_URL') or 'sqlite:///default.db')
 
 
 class BaseModel(Model):
