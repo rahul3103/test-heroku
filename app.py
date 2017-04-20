@@ -44,7 +44,7 @@ def welcome():
         a = os.environ.get('DATABASE_URL')
     if os.environ.get('HEROKU'):
         b = os.environ.get('HEROKU')
-    create_model_tables([Users], fail_silently=False)
+    create_model_tables([Users], fail_silently=True)
     Users.insert(name='John', email='Doe').execute()
     return render_template('index.html', a=a, b=b)
 
