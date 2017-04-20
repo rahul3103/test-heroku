@@ -1,18 +1,17 @@
 import os
 from peewee import Model, CharField, PostgresqlDatabase
 from urllib.parse import urlparse
-from flask_peewee.db import Database
 
 
 if os.environ.get('DATABASE_URL'):
     DATABASE_URL = os.environ.get('DATABASE_URL')
-    db = urlparse(DATABASE_URL)
-    user = db.username
-    password = db.password
-    path = db.path[1:]
-    host = db.hostname
-    port = db.port
-    database = PostgresqlDatabase(database=path, user=user, password=password, host=host, port=port)
+    url = urlparse(DATABASE_URL)
+    name = url.path[1:]
+    user = url.username,
+    password = url.password,
+    host = url.hostname,
+    port = url.port
+    database = PostgresqlDatabase(name, user=user, password=password, host=host, port=port)
 else:
     database = PostgresqlDatabase('heroku')
 
@@ -22,6 +21,6 @@ class BaseModel(Model):
         database = database
 
 
-class User(BaseModel):
+class Users(BaseModel):
     name = CharField()
-    email = CharField(null=False, unique=True)
+    email = CharField()

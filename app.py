@@ -4,6 +4,7 @@ from subprocess import call
 from peewee import CharField, PostgresqlDatabase, create_model_tables
 from urllib.parse import urlparse
 from flask_peewee.db import Database
+from model import Users
 
 
 if os.environ.get('DATABASE_URL'):
@@ -28,11 +29,7 @@ app = Flask(__name__)
 app.config.from_object(__name__)
 
 db = Database(app)
-
-
-class Users(db.Model):
-    name = CharField()
-    email = CharField()
+create_model_tables([Users], fail_silently=True)
 
 
 @app.route('/')
@@ -44,7 +41,6 @@ def welcome():
         a = os.environ.get('DATABASE_URL')
     if os.environ.get('HEROKU'):
         b = os.environ.get('HEROKU')
-    create_model_tables([Users], fail_silently=True)
     Users.insert(name='John', email='Doe').execute()
     return render_template('index.html', a=a, b=b)
 
