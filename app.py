@@ -44,7 +44,7 @@ def welcome():
         a = os.environ.get('DATABASE_URL')
     if os.environ.get('HEROKU'):
         b = os.environ.get('HEROKU')
-    User.insert(name='John', email='Doe').execute()
+    Users.insert(name='John', email='Doe').execute()
     return render_template('index.html', a=a, b=b)
 
 
