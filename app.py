@@ -44,10 +44,10 @@ def welcome():
         a = os.environ.get('DATABASE_URL')
     if os.environ.get('HEROKU'):
         b = os.environ.get('HEROKU')
+    create_model_tables([Users], fail_silently=False)
     Users.insert(name='John', email='Doe').execute()
     return render_template('index.html', a=a, b=b)
 
 
 if __name__ == '__main__':
-    create_model_tables([Users], fail_silently=False)
     app.run(port=5000, debug=True)
