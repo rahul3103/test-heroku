@@ -30,7 +30,7 @@ app.config.from_object(__name__)
 db = Database(app)
 
 
-class User(db.Model):
+class Users(db.Model):
     name = CharField()
     email = CharField()
 

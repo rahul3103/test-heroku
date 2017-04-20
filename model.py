@@ -1,8 +1,8 @@
 import os
-from peewee import Model, CharField, PostgresqlDatabase, Proxy
+from peewee import Model, CharField, PostgresqlDatabase
 from urllib.parse import urlparse
+from flask_peewee.db import Database
 
-db_proxy = Proxy()
 
 if os.environ.get('DATABASE_URL'):
     DATABASE_URL = os.environ.get('DATABASE_URL')
@@ -13,17 +13,15 @@ if os.environ.get('DATABASE_URL'):
     host = db.hostname
     port = db.port
     database = PostgresqlDatabase(database=path, user=user, password=password, host=host, port=port)
-    db_proxy.initialize(database)
 else:
     database = PostgresqlDatabase('heroku')
-    db_proxy.initialize(database)
 
 
 class BaseModel(Model):
     class Meta:
-        database = db_proxy
+        database = database
 
 
 class User(BaseModel):
     name = CharField()
-    email = CharField()
+    email = CharField(null=False, unique=True)
