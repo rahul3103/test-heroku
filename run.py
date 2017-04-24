@@ -13,6 +13,7 @@ def welcome():
     call('printenv')
     a = 'Default'
     b = 'Default'
+    
     if os.environ.get('DATABASE_URL'):
         a = os.environ.get('DATABASE_URL')
     if os.environ.get('HEROKU'):

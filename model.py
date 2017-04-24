@@ -1,6 +1,5 @@
 import os
-from peewee import Model, CharField, PostgresqlDatabase
-from urllib.parse import urlparse
+from peewee import Model, CharField
 from playhouse.db_url import connect
 
 database = connect(os.environ.get('DATABASE_URL') or 'sqlite:///default.db')
